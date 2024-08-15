@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TweetTouch - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F5F5DC;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 60px;
+            background-color: #605B56;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-search {
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .navbar-search input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+        }
+
+        .navbar-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-icons i {
+            font-size: 24px;
+            color: white;
+            margin: 0 15px;
+            cursor: pointer;
+        }
+
+        .menu-icon {
+            display: block;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .menu-icon div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        .container {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .left-sidebar {
+            width: 250px;
+            padding: 10px;
+            background-color: #F0E68C;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 80px;
+            bottom: 0;
+            left: -270px;
+            transition: left 0.5s ease;
+        }
+
+        .left-sidebar.active {
+            left: 0;
+        }
+
+        .left-sidebar .profile {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .left-sidebar .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .left-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .left-sidebar ul li {
+            padding: 15px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .left-sidebar ul li i {
+            font-size: 22px;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .left-sidebar ul li span {
+            font-weight: bold;
+        }
+
+        .feed {
+            width: 50%;
+            max-width: 600px;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        .tweet-box {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tweet-box textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .tweet-box button {
+            background-color: #605B56;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            float: right;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .tweet {
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .tweet-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .tweet-header h4 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tweet-header span {
+            font-size: 12px;
+            color: #606770;
+        }
+
+        .tweet-content {
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .tweet-actions i {
+            font-size: 20px;
+            color: #605B56;
+            cursor: pointer;
+        }
+
+        .right-sidebar {
+            width: 250px;
+            padding: 10px;
+            background-color: #F0E68C;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            right: 0;
+            top: 80px;
+            bottom: 0;
+        }
+
+        .right-sidebar h4 {
+            margin-bottom: 10px;
+        }
+
+        .trend {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .trend p {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .trend small {
+            color: #606770;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.05);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-shapes div:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shapes div:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 5s;
+        }
+
+        .floating-shapes div:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feed {
+                width: 90%;
+            }
+
+            .left-sidebar {
+                width: 200px;
+            }
+
+            .right-sidebar {
+                display: none;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="menu-icon" onclick="toggleSidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="navbar-logo">TweetTouch</div>
+        <div class="navbar-search">
+            <input type="text" placeholder="Search TweetSphere...">
+        </div>
+        <div class="navbar-icons">
+            <i class="fas fa-home"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-envelope"></i>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="left-sidebar" id="left-sidebar">
+            <div class="profile">
+                <img src="2.jpeg" alt="Profile Picture">
+            </div>
+            <ul>
+                <li><i class="fas fa-home"></i><span> Home</span></li>
+                <li><i class="fas fa-bell"></i><span> Notifications</span></li>
+                <li><i class="fas fa-envelope"></i><span> Messages</span></li>
+                <li><i class="fas fa-bookmark"></i><span> Bookmarks</span></li>
+                <li><i class="fas fa-user"></i><span> Profile</span></li>
+            </ul>
+        </div>
+
+        <div class="feed">
+            <div class="tweet-box">
+                <textarea rows="3" placeholder="What's happening?"></textarea>
+                <button>Touch</button>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="1.jpeg" alt="User Image">
+                    <div>
+                        <h4>Larry T<span>@larryt · 2h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Loving the new design trends for 2024! 💻🎨 #Design
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="3.jpeg" alt="User Image">
+                    <div>
+                        <h4>Bryan D<span>@bdz · 5h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Having a great day coding and designing new projects! 😊 #ProductiveDay
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="4.jpeg" alt="User Image">
+                    <div>
+                        <h4>Sam W<span>@samw · 8h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Excited for the upcoming tech conference! 🚀 #TechConference
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="5.jpeg" alt="User Image">
+                    <div>
+                        <h4>Emily R<span>@emilyr · 12h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Just finished a great book! 📚 #BookLover
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="6.jpeg" alt="User Image">
+                    <div>
+                        <h4>Tom B<span>@tomb · 15h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Great discussion on the latest trends in AI! 🤖 #AI
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="7.jpeg" alt="User Image">
+                    <div>
+                        <h4>Alice J<span>@alicej · 18h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Loving the new features in the latest update! 🆕 #TechUpdate
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="8.jpeg" alt="User Image">
+                    <div>
+                        <h4>Chris M<span>@chrism · 20h</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    The new UI design is fantastic! 🌟 #UIDesign
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="9.jpeg" alt="User Image">
+                    <div>
+                        <h4>Lisa K<span>@lisak · 1d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Can't wait for the weekend getaway! 🏖️ #WeekendPlans
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="10.jpeg" alt="User Image">
+                    <div>
+                        <h4>Nick A<span>@nicka · 2d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Loving the new features in the latest tech gadget! 📱 #TechGadget
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="11.jpeg" alt="User Image">
+                    <div>
+                        <h4>Rachel S<span>@rachels · 3d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Excited for the new season of my favorite show! 📺 #TVShows
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="12.jpeg" alt="User Image">
+                    <div>
+                        <h4>James L<span>@jamesl · 4d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Enjoying a peaceful evening with a good book. 📖 #Relaxation
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="13.jpeg" alt="User Image">
+                    <div>
+                        <h4>Anna M<span>@annam · 5d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    The latest update is a game-changer! 🔥 #TechUpdate
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+
+            <div class="tweet">
+                <div class="tweet-header">
+                    <img src="14.jpeg" alt="User Image">
+                    <div>
+                        <h4>Mark T<span>@markt · 6d</span></h4>
+                    </div>
+                </div>
+                <div class="tweet-content">
+                    Loving the new features in my favorite app! 🌟 #AppUpdate
+                </div>
+                <div class="tweet-actions">
+                    <i class="fas fa-thumbs-up" title="Like"></i>
+                    <i class="fas fa-thumbs-down" title="Dislike"></i>
+                    <i class="fas fa-comment" title="Comment"></i>
+                    <i class="fas fa-share" title="Share"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-sidebar">
+            <div class="trend">
+                <h4>Trending</h4>
+                <p>#Design2024 <small>5.2k Tweets</small></p>
+                <p>#TechNews <small>3.4k Tweets</small></p>
+                <p>#AIUpdates <small>2.1k Tweets</small></p>
+                <p>#WeekendPlans <small>1.8k Tweets</small></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-shapes">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('left-sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
